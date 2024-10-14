@@ -1,17 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     kotlin("kapt")
+    // id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.yuruneji.cameratraining"
+    namespace = "com.yuruneji.camera_training"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.yuruneji.cameratraining"
-        minSdk = 29
+        applicationId = "com.yuruneji.camera_training"
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -20,29 +21,32 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "API_URL_BASE", "\"${project.properties["API_URL_BASE"]}\"")
+        buildConfigField("String", "API_URL_DEVELOP", "\"${project.properties["API_URL_DEVELOP"]}\"")
+        buildConfigField("String", "API_URL_STAGING", "\"${project.properties["API_URL_STAGING"]}\"")
+        buildConfigField("String", "API_URL_PRODUCTION", "\"${project.properties["API_URL_PRODUCTION"]}\"")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
@@ -72,7 +76,7 @@ dependencies {
     // Accompanist
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
 
-    // Hilt
+    // DI: Hilt
     val hilt_version = "2.49"
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
@@ -82,15 +86,16 @@ dependencies {
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    // Room
+    // DB: Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+    // ksp("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:$room_version")
 
-    // CameraX
-    val camerax_version = "1.4.0-alpha04"
+    // Camera: CameraX
+    val camerax_version = "1.4.0-beta02"
     implementation("androidx.camera:camera-core:${camerax_version}")
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
@@ -99,27 +104,30 @@ dependencies {
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
     implementation("androidx.camera:camera-extensions:${camerax_version}")
 
-    // ML Kit
+    // mobile SDK: ML Kit
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
     implementation("com.google.mlkit:face-detection:16.1.5")
 
-    // Retrofit
+    // WebServer: NanoHttpd
+    implementation("org.nanohttpd:nanohttpd-webserver:2.3.1")
+
+    // HTTP Client:Retrofit
     val retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
 
-    // Moshi
+    // Json: Moshi
     val moshi_version = "1.14.0"
     implementation("com.squareup.moshi:moshi-kotlin:$moshi_version")
 
-    // Coil
+    // Image: Coil
     val coil_version = "2.4.0"
     implementation("io.coil-kt:coil-compose:$coil_version")
 
-    // Timber
+    // Log: Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-    // Security-Crypto
+    // Crypto: Security-Crypto
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // DataStore
@@ -127,8 +135,15 @@ dependencies {
 
     // Apache Commons Lang 3.12.0
     implementation("org.apache.commons:commons-lang3:3.12.0")
+    // Apache Commons Codec 1.15
+    implementation("commons-codec:commons-codec:1.15")
+    // Apache Commons Net 3.11.1
+    implementation("commons-net:commons-net:3.11.1")
 
-    // LeakCanary
+    // Location
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // Debug: LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 
 }
