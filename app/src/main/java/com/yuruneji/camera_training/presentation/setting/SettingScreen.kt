@@ -9,8 +9,9 @@ import androidx.navigation.NavController
  * @version 1.0
  */
 @Composable
-fun SettingState(
+fun SettingScreen(
     navController: NavController,
     viewModel: SettingViewModel = hiltViewModel()
 ) {
+    //
 }

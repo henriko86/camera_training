@@ -11,6 +11,10 @@ import com.yuruneji.camera_training.domain.repository.LogRepository
 import com.yuruneji.camera_training.presentation.log_view.state.LogPeriod
 import com.yuruneji.camera_training.presentation.log_view.state.LogViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import org.apache.commons.net.nntp.Article
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -23,11 +27,12 @@ class LogViewViewModel @Inject constructor(
     private val _logViewState = MutableLiveData(LogViewState())
     val logViewState: LiveData<LogViewState> = _logViewState
 
-    fun setDate(date: LocalDate = LocalDate.now()) {
+    fun setDate(date: LocalDate) {
         _logViewState.value = _logViewState.value?.copy(
             date = date
         )
     }
+  
 
     // fun setTime(time: LocalTime) {
     //     _logViewState.value = _logViewState.value?.copy(

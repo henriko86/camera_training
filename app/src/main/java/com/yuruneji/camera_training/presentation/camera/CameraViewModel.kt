@@ -1,45 +1,27 @@
 package com.yuruneji.camera_training.presentation.camera
 
 import android.content.Context
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.UseCaseGroup
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yuruneji.camera_training.App
-import com.yuruneji.camera_training.common.AuthMethod
-import com.yuruneji.camera_training.common.MultiAuthType
 import com.yuruneji.camera_training.common.response.AuthResponse
 import com.yuruneji.camera_training.common.response.LogUploadResponse
 import com.yuruneji.camera_training.common.service.NetworkService
 import com.yuruneji.camera_training.common.service.SoundService
 import com.yuruneji.camera_training.common.service.TimeService
-import com.yuruneji.camera_training.common.toByteArray
-import com.yuruneji.camera_training.data.local.preference.AppPreferences
-import com.yuruneji.camera_training.data.local.preference.convert
 import com.yuruneji.camera_training.domain.model.AppRequestModel
 import com.yuruneji.camera_training.domain.model.FaceItemModel
 import com.yuruneji.camera_training.domain.model.QrItemModel
 import com.yuruneji.camera_training.domain.usecase.CardAuthUseCase
-import com.yuruneji.camera_training.domain.usecase.FaceAnalyzer
 import com.yuruneji.camera_training.domain.usecase.FaceAuthUseCase
 import com.yuruneji.camera_training.domain.usecase.LogUploadUseCase
-import com.yuruneji.camera_training.domain.usecase.QrCodeAnalyzer
 import com.yuruneji.camera_training.presentation.camera.state.AuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.isActive
@@ -52,8 +34,6 @@ import timber.log.Timber
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Base64
-import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -301,7 +281,7 @@ class CameraViewModel @Inject constructor(
 
 
             val model = AppRequestModel(
-                img = "data:image/jpeg;base64,${Base64.getEncoder().encodeToString(faceItem.faceBitmap?.toByteArray())}"
+                // img = "data:image/jpeg;base64,${Base64.getEncoder().encodeToString(faceItem.faceBitmap?.toByteArray())}"
             )
 
             soundService?.playAuthStart()

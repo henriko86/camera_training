@@ -11,15 +11,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yuruneji.camera_training.presentation.camera.CameraScreen
-import com.yuruneji.camera_training.presentation.setting.SettingState
+import com.yuruneji.camera_training.presentation.log_view.LogViewScreen
+import com.yuruneji.camera_training.presentation.setting.SettingScreen
 import com.yuruneji.camera_training.presentation.ui.theme.CameraTrainingTheme
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.i(Throwable().stackTrace[0].methodName)
         super.onCreate(savedInstanceState)
+
         // enableEdgeToEdge()
+
         setContent {
             CameraTrainingTheme {
                 Surface(
@@ -34,11 +39,16 @@ class MainActivity : ComponentActivity() {
                         composable(route = ScreenRoute.CameraScreen.route) {
                             CameraScreen(navController = navController)
                         }
-                        composable(route = ScreenRoute.SettingState.route) {
-                            SettingState(navController = navController)
+                        composable(route = ScreenRoute.SettingScreen.route) {
+                            SettingScreen(navController = navController)
+                        }
+                        composable(route = ScreenRoute.LogViewState.route) {
+                            LogViewScreen(navController = navController)
                         }
                     }
                 }
+
+                // LogViewScreen()
             }
         }
     }

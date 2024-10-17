@@ -2,7 +2,7 @@ package com.yuruneji.camera_training.data.local.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yuruneji.camera_training.presentation.log_view.view.LogViewItem
+import com.yuruneji.camera_training.presentation.log_view.LogViewItem
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

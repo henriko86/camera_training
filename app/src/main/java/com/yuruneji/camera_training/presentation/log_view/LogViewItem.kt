@@ -1,4 +1,4 @@
-package com.yuruneji.camera_training.presentation.log_view.view
+package com.yuruneji.camera_training.presentation.log_view
 
 /**
  * @author toru

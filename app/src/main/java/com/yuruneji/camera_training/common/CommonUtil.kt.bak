@@ -21,6 +21,10 @@ import org.apache.commons.codec.binary.Hex
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.UnsupportedEncodingException
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.experimental.inv
 
@@ -183,6 +187,35 @@ object CommonUtil {
     }
 
 
+    private const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    private const val DATE_FORMAT = "yyyy-MM-dd"
+    private const val TIME_FORMAT = "HH:mm:ss"
+
+    fun getDateTimeStr(pattern: String = DATE_TIME_FORMAT): String {
+        return getDateTimeStr(LocalDateTime.now(), pattern)
+    }
+
+    fun getDateTimeStr(dateTime: LocalDateTime, pattern: String = DATE_TIME_FORMAT): String {
+        return DateTimeFormatter.ofPattern(pattern).format(dateTime)
+    }
+
+    fun getDateStr(pattern: String = DATE_FORMAT): String {
+        return getDateStr(LocalDate.now(), pattern)
+    }
+
+    fun getDateStr(date: LocalDate, pattern: String = DATE_FORMAT): String {
+        return DateTimeFormatter.ofPattern(pattern).format(date)
+    }
+
+    fun getTimeStr(pattern: String = TIME_FORMAT): String {
+        return getTimeStr(LocalTime.now(), pattern)
+    }
+
+    fun getTimeStr(time: LocalTime, pattern: String = TIME_FORMAT): String {
+        return DateTimeFormatter.ofPattern(pattern).format(time)
+    }
+
+
     fun byteHexIntSum(list: List<Byte>): Int {
         var sum = 0
         for (b in list) {
@@ -232,4 +265,10 @@ object CommonUtil {
         return str.toByteArray(Charsets.US_ASCII).joinToString(separator)
     }
 
+}
+
+fun Bitmap.toByteArray(): ByteArray {
+    val buffer = ByteBuffer.allocate(this.byteCount)
+    this.copyPixelsToBuffer(buffer)
+    return buffer.array()
 }
